@@ -1,0 +1,3 @@
+export const ADMIN_LOGIN = "ADMIN_LOGIN"
+export const ADMIN_LOGIN_ERROR = "ADMIN_LOGIN_ERROR"
+export const COMMON_ERROR = "COMMON_ERROR"
