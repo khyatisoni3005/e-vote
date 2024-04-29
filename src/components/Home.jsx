@@ -3,14 +3,16 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import CommonButton from './CommonButton';
 import UserLoginForm from './voter/UserLoginForm';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { adminLogin } from "../redux-thunk/action/adminAction"
 import Button from '@mui/material/Button';
 import { SnackbarProvider, useSnackbar } from 'notistack';
 
 function Home() {
-    const { success, message } = useSelector((state) => state.common)
+    const navigate = useNavigate();
+    const { alertObj } = useSelector((state) => state.common)
+    const { isLoggedin } = useSelector((state) => state.admin)
     const { enqueueSnackbar } = useSnackbar();
     const dispatch = useDispatch()
 
@@ -22,22 +24,25 @@ function Home() {
 
     function handleAdminLoginData(e) {
         setAdminLoginData({ ...adminLoginData, [e.target.name]: e.target.value })
-
     }
 
     useEffect(() => {
+        if (isLoggedin) {
+            navigate("/DashBoard")
+        }
+    }, [isLoggedin])
 
-        if (!success && message) {
-
-            enqueueSnackbar(message, {
-                variant: success ? 'success' : 'error',
+    useEffect(() => {
+        if (alertObj && alertObj.message) {
+            enqueueSnackbar(alertObj.message, {
+                variant: alertObj.success ? "success" : "error",
                 anchorOrigin: {
                     vertical: 'top',
                     horizontal: 'center'
                 }
             });
         }
-    }, [success])
+    }, [alertObj])
 
     return (
         <>
@@ -79,9 +84,7 @@ function Home() {
                             <label htmlFor="">password </label><br />
                             <input type="password" name='password' onChange={handleAdminLoginData} placeholder='enter your password' autocomplete="new-password" />
                             <br /><br />
-                            <Link to="/DashBoard" style={{ textDecoration: "none" }}>
-                                <CommonButton content={"submit"} onClick={submitLoginData} />
-                            </Link>
+                            <CommonButton content={"submit"} onClick={submitLoginData} />
                             <br />
                             <Link to="/UserLoginForm" style={{ textDecoration: "none" }}>
                                 <CommonButton content={"Login as user"} />

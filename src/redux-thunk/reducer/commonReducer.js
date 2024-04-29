@@ -1,8 +1,10 @@
-import { COMMON_ERROR } from "../type"
+import { COMMON_ERROR, SUCCESS } from "../type"
 
 let initialState = {
-    message: "",
-    success: false
+    alertObj: {
+        message: "",
+        success: false
+    }
 
 }
 
@@ -10,12 +12,24 @@ let initialState = {
 export const commonReducer = (state = initialState, action) => {
     switch (action.type) {
         case COMMON_ERROR:
+            console.log(action.payload, "acp");
             return {
-                ...state,
-                message: action.payload.message
+                alertObj: {
+                    message: action.payload.message,
+                    success: false
+                }
+            }
+        case SUCCESS:
+            console.log(action.payload, "acp");
+            return {
+                alertObj: {
+                    message: action.payload.message,
+                    success: true
+                }
+
             }
         default:
-            return state
+            return { ...state }
 
     }
 

@@ -94,3 +94,13 @@ ul li:hover,
 ul li:focus {
   color: blue;
 }
+
+.userdetails label {
+  font-weight: normal;
+  text-transform: capitalize;
+}
+
+.userdetails p {
+  font-weight: 900;
+  text-transform: capitalize;
+}

@@ -1,16 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import CommonButton from '../CommonButton';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { userLoginDataSubmit } from '../../redux-thunk/action/userAction';
+
 
 
 function UserLoginForm() {
+    const { isUserLoggedin } = useSelector((state) => state.user)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const [userLoginData, setUserLoginData] = useState({})
 
-
-    function submitLoginData() {
-
+    function adminLoginPage() {
+        navigate("/")
     }
+    function handleUserLoginData(e) {
+        setUserLoginData({ ...userLoginData, [e.target.name]: e.target.value })
+    }
+    function submitLoginData() {
+        dispatch(userLoginDataSubmit(userLoginData))
+    }
+
+    useEffect(() => {
+        if (isUserLoggedin) {
+            navigate("/Voter")
+        }
+    }, [isUserLoggedin])
+
 
     return (
         <>
@@ -41,25 +60,23 @@ function UserLoginForm() {
                             </svg>
                         </div>
                     </div>
-                    <div className="col-6" style={{ padding: "140px 150px 80px 150px" }}>
+                    <div className="col-6" style={{ padding: "140px 150px 150px 150px" }}>
                         <div className="LogIn-form" style={{ border: "1px solid black", padding: "50px 50px 80px 50px", borderRadius: "12px" }}>
                             <h3>Login With VOTING ID</h3>
                             <br />
-                            <label htmlFor=""> Name</label>
-                            <br />
-                            <input type="text" name='name' placeholder='enter Name' autocomplete="off" /><br />
-                            <br />
+
+
                             <label htmlFor="">voteCard Number </label><br />
-                            <input type="password" name='cardNo' placeholder='enter voteCard Number' autocomplete="off" />
+                            <input type="password" name='cardNo' onChange={handleUserLoginData} placeholder='enter voteCard Number' autocomplete="off" />
                             <br /><br />
                             <label htmlFor="">Enter Password </label><br />
-                            <input type="password" name='password' placeholder='enter your password' autocomplete="new-password" />
+                            <input type="password" name='password' onChange={handleUserLoginData} placeholder='enter your password' autocomplete="new-password" />
                             <br /><br /><br />
                             <CommonButton onClick={submitLoginData} content={"submit"} />
                             <br />
-                            <Link to='/' style={{ textDecoration: "none" }}>
-                                <CommonButton onClick={submitLoginData} content={"Login As Admin"} />
-                            </Link>
+
+                            <CommonButton onClick={adminLoginPage} content={"Login As Admin"} />
+
 
 
                         </div>

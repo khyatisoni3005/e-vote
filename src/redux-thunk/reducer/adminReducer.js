@@ -1,7 +1,7 @@
-import { ADMIN_LOGIN } from "../type"
+import { ADMIN_LOGIN, ADMIN_LOGOUT } from "../type"
 
 let initialState = {
-    adminData: []
+    isLoggedin: false
 }
 
 
@@ -10,9 +10,16 @@ export const adminReducer = (state = initialState, action) => {
         case ADMIN_LOGIN:
             return {
                 ...state,
+                isLoggedin: true
+
+            }
+        case ADMIN_LOGOUT:
+            return {
+                ...state,
+                isLoggedin: false
             }
         default:
-        return state
+            return state
 
     }
 

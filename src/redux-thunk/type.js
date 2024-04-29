@@ -1,3 +1,11 @@
 export const ADMIN_LOGIN = "ADMIN_LOGIN"
 export const ADMIN_LOGIN_ERROR = "ADMIN_LOGIN_ERROR"
 export const COMMON_ERROR = "COMMON_ERROR"
+export const ADMIN_LOGOUT = "ADMIN_LOGOUT"
+export const SUCCESS = "SUCCESS"
+export const USER_LOGIN = "USER_LOGIN"
+export const ADD_USER = "ADD_USER"
+export const GET_USER = "GET_USER"
+export const DELETE_USER = "DELETE_USER"
+export const VIEW_USER = "VIEW_USER"
+

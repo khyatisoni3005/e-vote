@@ -3,6 +3,7 @@ import Navbar from '../../Navbar'
 import Sidebar from '../../Sidebar'
 import CommonButton from "../../CommonButton"
 import UserModal from "./UserModal"
+import UserDataTable from './UserDataTable'
 
 function User() {
 
@@ -19,6 +20,7 @@ function User() {
                     <div className="row">
                         <div className="col-10"></div>
                         <UserModal />
+                        <UserDataTable />
                     </div>
                 </div>
             </div>

@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useEffect, useId, useState } from 'react'
 import CommonButton from '../../CommonButton'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-
+import { userDataAction } from '../../../redux-thunk/action/userAction';
 import CloseIcon from '@mui/icons-material/Close';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 
 const style = {
     position: 'absolute',
@@ -22,17 +24,49 @@ const style = {
 
 function UserModal() {
 
+    const { userId } = useSelector((state) => state.user)
+    const dispatch = useDispatch()
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleClose = () => {
 
-    function handleUserData() {
+        setOpen(false)
+    };
+    const [userData, setUserData] = useState({})
+    function handleUserDataModal() {
         setOpen(true)
     }
 
-    function submitUserData() {
-        setOpen(false)
+    function handleUserData(e) {
+        setUserData({ ...userData, [e.target.name]: e.target.value })
     }
+
+    function submitUserData() {
+        dispatch(userDataAction(userData))
+        setOpen(false)
+         // setUserData({
+        //     name: "",
+        //     sex: "",
+        //     fatherName: "",
+        //     cardNo: "",
+        //     dob: "",
+        //     password: "",
+        //     assemblyNoandName: "",
+        //     partNoandName: ""
+        // })
+    }
+
+    useEffect(() => {
+        console.log(userId);
+        if (userId) {
+            axios.get(`http://localhost:8000/v1/user/finduser/${userId}`)
+                .then((res) => {
+                    setOpen(true)
+                    console.log(res.data.data, "view res");
+                    setUserData(res.data.data)
+                })
+        }
+    }, [userId])
 
     return (
         <>
@@ -40,7 +74,7 @@ function UserModal() {
                 <div className="col-10"></div>
                 <div className="col-2 mt-2">
 
-                    <CommonButton content={"ADD USER"} onClick={handleUserData} />
+                    <CommonButton content={"ADD USER"} onClick={handleUserDataModal} />
 
 
                     <Modal
@@ -64,47 +98,42 @@ function UserModal() {
                             <div className="row">
                                 <div className="col-6 user-lable">
                                     <label htmlFor="">cardNo</label><br />
-                                    <input type="text" name='cardNo' />
+                                    <input type="text" name='cardNo' onChange={handleUserData} value={userData.cardNo} />
                                     <br />
                                     <label htmlFor="">name</label><br />
-                                    <input type="text" name='name' />
+                                    <input type="text" name='name' onChange={handleUserData} value={userData.name} />
                                     <br />
                                     <label htmlFor="">fatherName</label><br />
-                                    <input type="text" name='fatherName' />
+                                    <input type="text" name='fatherName' onChange={handleUserData} value={userData.fatherName} />
                                     <br />
-                                    <label htmlFor="">role</label><br />
-                                    <input type="text" name='role' />
+                                    <label htmlFor="">assemblyNoandName</label><br />
+                                    <input type="text" name='assemblyNoandName' onChange={handleUserData} value={userData.assemblyNoandName} />
                                     <br />
-                                    <label htmlFor="">password</label><br />
-                                    <input type="text" name='password' />
-                                    <br />
-                                    <label htmlFor="">Gender</label><br />
-                                    <input type="radio" id="male" name="gender" value="male" className='me-2' />
-                                    <label for="male" className='me-3'>male</label>
-                                    <input type="radio" id="female" name="gender" value="female" className='me-2' />
-                                    <label for="female">female</label><br />
-                                    <input type="radio" id="other" name="gender" value="other" className='me-2' />
-                                    <label for="other">other</label>
 
+                                    <label htmlFor="">Gender</label><br />
+                                    <input type="radio" id="male" name="sex" value="male" className='me-2' onChange={handleUserData} checked={userData.sex === "male"} />
+                                    <label for="male" className='me-3'>male</label>
+                                    <input type="radio" id="female" name="sex" value="female" className='me-2' onChange={handleUserData} checked={userData.sex === "female"} />
+                                    <label for="female">female</label><br />
+                                    <input type="radio" id="other" name="sex" value="other" className='me-2' onChange={handleUserData} checked={userData.sex === "other"} />
+                                    <label for="other">other</label>
                                     <br />
                                 </div>
                                 <div className="col-6 user-lable">
                                     <label htmlFor="">DOB</label><br />
-                                    <input type="text" name='dob' />
+                                    <input type="text" name='dob' onChange={handleUserData} value={userData.dob} />
                                     <br />
                                     <label htmlFor="">Address</label><br />
-                                    <input type="text" name='address' />
+                                    <input type="text" name='address' onChange={handleUserData} value={userData.address} />
                                     <br />
-                                    <label htmlFor="">AssemblyNoandName</label><br />
-                                    <input type="text" name='assemblyNoandName' />
+                                    <label htmlFor="">password</label><br />
+                                    <input type="text" name='password' onChange={handleUserData} value={userData.password} />
                                     <br />
                                     <label htmlFor="">partNoandName</label><br />
-                                    <input type="text" name='partNoandName' />
+                                    <input type="text" name='partNoandName' onChange={handleUserData} value={userData.partNoandName} />
                                     <br />
-                                    <label htmlFor="">Token</label><br />
-                                    <input type="text" name='token' />
-                                    <br />
-                                    <br />
+
+
 
                                     <div className='mt-2'>
                                         <CommonButton content={"SUMBIT"} onClick={submitUserData} />

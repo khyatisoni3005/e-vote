@@ -1,9 +1,37 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useNavigate } from "react-router-dom"
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import { useDispatch, useSelector } from 'react-redux';
+import { adminLogOutAction } from "../redux-thunk/action/adminAction"
+import { ADMIN_LOGIN } from '../redux-thunk/type';
 
 function Navbar() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch()
+    const { isLoggedin } = useSelector((state) => state.admin)
+
+    function adminLogOut() {
+        dispatch(adminLogOutAction())
+    }
+
+    useEffect(() => {
+
+        let adminLoginData = JSON.parse(localStorage.getItem("adminData"))
+        if (adminLoginData && adminLoginData.success) {
+            dispatch({ type: ADMIN_LOGIN, payload: adminLoginData })
+        }
+    }, [])
+
+    useEffect(() => {
+        if (!isLoggedin) {
+            navigate("/")
+        }
+    }, [isLoggedin])
+
+
     return (
         <div>
-            <div className="row" style={{ backgroundColor: "rgb(18, 20, 129" }}>
+            <div className="row" style={{ backgroundColor: "rgb(18, 20, 129)" }}>
                 <div className="col-2" style={{ marginTop: "11px", marginLeft: "-40px" }}>
                     <svg width="272" height="60" viewBox="0 0 272 250" fill="none" xmlns="http://www.w3.org/2000/svg" >
                         <g clip-path="url(#clip0_292_707)">
@@ -21,10 +49,15 @@ function Navbar() {
                     </svg>
                 </div>
                 <div className="col-8"></div>
-                <div className="col-2">
+                <div className="col-2 mt-3 " style={{ color: "white" }}>
+
+                    <button style={{ marginLeft: "100px", borderRadius: "12px", padding: "6px 8px", color: "rgb(18, 20, 129)" }} onClick={adminLogOut}>
+                        <PowerSettingsNewIcon />
+                        <span style={{ marginLeft: "9px", marginTop: "4px" }}>LOGOUT</span>
+                    </button>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

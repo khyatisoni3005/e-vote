@@ -11,14 +11,16 @@ import Party from './components/admin/party/Party'
 import Connection from "./components/admin/connection/Connection"
 import { Provider } from "react-redux";
 import { store } from "./redux-thunk/store"
+import Voter from "./components/voter/voter/Voter"
 
 
 
 function App() {
   return (
-    <Provider store={store}>
+    < SnackbarProvider autoHideDuration={2000} maxSnack={20}>
 
-      < SnackbarProvider maxSnack={20}>
+      <Provider store={store}>
+
 
         <BrowserRouter>
           <Routes>
@@ -29,11 +31,13 @@ function App() {
             <Route path="/Election" element={<Election />} />
             <Route path="/User" element={<User />} />
             <Route path="/Connection" element={<Connection />} />
+            <Route path="/Voter" element={<Voter />} />
           </Routes>
         </BrowserRouter>
-      </SnackbarProvider>
 
-    </Provider>
+
+      </Provider>
+    </SnackbarProvider>
   );
 }
 
