@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { userDataAction } from '../../../redux-thunk/action/userAction';
+import { userDataAction, updateUserDataAction, emptyViewId } from '../../../redux-thunk/action/userAction';
 import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
@@ -42,27 +42,61 @@ function UserModal() {
     }
 
     function submitUserData() {
+        console.log("submited");
         dispatch(userDataAction(userData))
         setOpen(false)
-         // setUserData({
-        //     name: "",
-        //     sex: "",
-        //     fatherName: "",
-        //     cardNo: "",
-        //     dob: "",
-        //     password: "",
-        //     assemblyNoandName: "",
-        //     partNoandName: ""
-        // })
+        setUserData({
+            name: "",
+            sex: "",
+            fatherName: "",
+            cardNo: "",
+            dob: "",
+            password: "",
+            assemblyNoandName: "",
+            partNoandName: ""
+        })
+    }
+
+
+    function updateUserData(userData) {
+        dispatch(updateUserDataAction(userData))
+        setOpen(false)
+        setUserData({
+            name: "",
+            sex: "",
+            fatherName: "",
+            cardNo: "",
+            dob: "",
+            password: "",
+            assemblyNoandName: "",
+            partNoandName: ""
+        })
+        setOpen(false)
+
     }
 
     useEffect(() => {
-        console.log(userId);
+        if (!open) {
+            setUserData({
+                name: "",
+                sex: "",
+                fatherName: "",
+                cardNo: "",
+                dob: "",
+                password: "",
+                assemblyNoandName: "",
+                partNoandName: ""
+            })
+            dispatch(emptyViewId())
+        }
+    }, [open])
+
+    useEffect(() => {
+        console.log("userId", userId)
         if (userId) {
             axios.get(`http://localhost:8000/v1/user/finduser/${userId}`)
                 .then((res) => {
                     setOpen(true)
-                    console.log(res.data.data, "view res");
                     setUserData(res.data.data)
                 })
         }
@@ -78,6 +112,7 @@ function UserModal() {
 
 
                     <Modal
+
                         open={open}
                         onClose={handleClose}
                         aria-labelledby="modal-modal-title"
@@ -136,14 +171,20 @@ function UserModal() {
 
 
                                     <div className='mt-2'>
-                                        <CommonButton content={"SUMBIT"} onClick={submitUserData} />
+                                        <CommonButton content={"SUMBIT"} onClick={() => {
+                                            if (userData._id && userData) {
+                                                updateUserData(userData)
+                                            } else {
+                                                submitUserData()
+                                            }
+                                        }} />
                                     </div>
                                 </div>
                             </div>
 
 
                         </Box>
-                    </Modal>
+                    </Modal >
 
                 </div>
             </div>

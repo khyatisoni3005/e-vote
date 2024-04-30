@@ -12,7 +12,6 @@ let initialState = {
 export const commonReducer = (state = initialState, action) => {
     switch (action.type) {
         case COMMON_ERROR:
-            console.log(action.payload, "acp");
             return {
                 alertObj: {
                     message: action.payload.message,
@@ -20,7 +19,6 @@ export const commonReducer = (state = initialState, action) => {
                 }
             }
         case SUCCESS:
-            console.log(action.payload, "acp");
             return {
                 alertObj: {
                     message: action.payload.message,

@@ -6,17 +6,23 @@ import { USER_LOGIN } from '../../../redux-thunk/type';
 import CommonButton from '../../CommonButton';
 import UserDetailModal from './UserDetailModal';
 
+
 export default function Voter() {
+
     const dispatch = useDispatch()
     const { displayUser } = useSelector((state) => state.user)
 
     useEffect(() => {
         let userlogin = JSON.parse(localStorage.getItem("userLoginData"))
         if (userlogin && userlogin.success) {
+
             dispatch({
                 type: USER_LOGIN,
                 payload: userlogin
             })
+        }
+        else {
+
         }
     }, [])
 

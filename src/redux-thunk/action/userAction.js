@@ -1,12 +1,13 @@
 import axios from "axios"
-import { ADD_USER, COMMON_ERROR, DELETE_USER, GET_USER, SUCCESS, USER_LOGIN, VIEW_USER } from "../type"
-import { type } from "@testing-library/user-event/dist/type"
+import { ADD_USER, COMMON_ERROR, DELETE_USER, EMPTY_ID, GET_USER, SUCCESS, UPDATE_USER, USER_LOGIN, VIEW_USER } from "../type"
 
 export const userLoginDataSubmit = (userLoginData) => {
     return (dispatch) => {
         axios.post("http://localhost:8000/v1/login/user", userLoginData)
             .then((res) => {
-                localStorage.setItem("userLoginData", JSON.stringify(res.data.user))
+
+                localStorage.setItem("userLoginData", JSON.stringify(res.data.data.user))
+                console.log(res.data.data.user, "res.data.data.user");
                 dispatch({
                     type: USER_LOGIN,
                     payload: res.data
@@ -20,7 +21,6 @@ export const userLoginDataSubmit = (userLoginData) => {
 
             })
             .catch((error) => {
-                console.log("userLoginDataSubmit", error);
                 dispatch({
                     type: COMMON_ERROR,
                     payload: {
@@ -37,7 +37,7 @@ export const userDataAction = (userData) => {
             .then((res) => {
                 dispatch({
                     type: ADD_USER,
-                    payload: res.data
+                    payload: res.data.data
                 })
                 dispatch({
                     type: SUCCESS,
@@ -66,7 +66,6 @@ export const getUserDataList = () => {
     return (dispatch) => {
         axios.get("http://localhost:8000/v1/user/list")
             .then((res) => {
-                console.log(res.data.data, "acrion res.data");
                 dispatch({
                     type: GET_USER,
                     payload: res.data.data
@@ -125,4 +124,39 @@ export const viewUserData = (id) => {
             payload: id
         })
 
+}
+
+//update data 
+
+
+export const updateUserDataAction = (userData) => {
+    console.log(userData, "action userdataa");
+    return (dispatch) => {
+        axios.put(`http://localhost:8000/v1/user/update/${userData._id}`, userData)
+            .then((res) => {
+                dispatch({
+                    type: UPDATE_USER,
+                    payload: res.data.data
+                })
+                
+                dispatch({
+                    type: SUCCESS,
+                    payload: {
+                        message: "USER updated SUCCESSFULLY"
+                    }
+                })
+
+            })
+
+    }
+}
+
+
+export const emptyViewId = () => {
+
+    return (dispatch) =>
+        dispatch({
+            type: EMPTY_ID,
+            payload: ""
+        })
 }

@@ -11,7 +11,7 @@ function DashBoard() {
                     <Sidebar />
                 </div>
                 <div className="col-10">
-                    <h1>dehs</h1>
+
                 </div>
             </div>
         </>

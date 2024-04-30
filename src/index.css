@@ -104,3 +104,12 @@ ul li:focus {
   font-weight: 900;
   text-transform: capitalize;
 }
+
+.modal {
+  border-radius: 30px;
+
+}
+
+.css-1aejcdg-MuiPaper-root-MuiTableContainer-root {
+  background-color: transparent !important;
+}

@@ -1,5 +1,5 @@
 import { userLoginDataSubmit } from "../action/userAction"
-import { ADD_USER, DELETE_USER, GET_USER, USER_LOGIN, VIEW_USER } from "../type"
+import { ADD_USER, DELETE_USER, EMPTY_ID, GET_USER, UPDATE_USER, USER_LOGIN, VIEW_USER } from "../type"
 
 let initialState = {
     isUserLoggedin: false,
@@ -25,7 +25,6 @@ export const userReducer = (state = initialState, action) => {
 
             }
         case GET_USER:
-            console.log(action.payload, "reducer");
             return {
 
                 ...state,
@@ -37,6 +36,28 @@ export const userReducer = (state = initialState, action) => {
                 userDataList: state.userDataList.filter((val) => val._id !== action.payload)
             }
         case VIEW_USER:
+            return {
+                ...state,
+                userId: action.payload
+            }
+
+        case UPDATE_USER:
+
+            console.log(action.payload._id, "reducer ac");
+            return {
+                ...state,
+                userDataList: state.userDataList.map((val) => {
+                    if (val._id == action.payload._id) {
+                        return action.payload
+                    }
+                    else {
+                        return val
+                    }
+
+                })
+
+            }
+        case EMPTY_ID:
             return {
                 ...state,
                 userId: action.payload

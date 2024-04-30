@@ -21,6 +21,7 @@ function UserLoginForm() {
         setUserLoginData({ ...userLoginData, [e.target.name]: e.target.value })
     }
     function submitLoginData() {
+        console.log(userLoginData, "userLoginData");
         dispatch(userLoginDataSubmit(userLoginData))
     }
 

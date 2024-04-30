@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import PartyTable from './PartyTable';
 
 
 
@@ -60,7 +61,11 @@ function PartyModal() {
                                 <label htmlFor="">Sort Code</label>
                                 <br />
                                 <input type="text" name='short_code' />
-                                <br />  
+                                <br />
+                                <label htmlFor="">Party Logo</label>
+                                <br />
+                                <input type="file" name='party_logo' />
+                                <br /><br />
                                 <div className="row">
                                     <div className="col-4">
                                         <CommonButton onClick={submitPartyDetail} content={"submit"} />
@@ -73,8 +78,10 @@ function PartyModal() {
                             </div>
                         </Box>
                     </Modal>
+
                 </div>
             </div>
+            <PartyTable />
         </>
     )
 }
