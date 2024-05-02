@@ -70,12 +70,10 @@ function ConnectionModal() {
     useEffect(() => {
         axios.get(`http://localhost:8000/v1/election/list`)
             .then((res) => {
-                console.log("res.data", res.data.data);
                 setLocalElectionData(res.data.data)
 
             })
     }, [])
-    console.log(localElectionData, "localElectionData");
     return (
         <>
             <div>

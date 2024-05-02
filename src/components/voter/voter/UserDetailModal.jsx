@@ -67,7 +67,6 @@ function UserDetailModal() {
         </Box>
     );
 
-    console.log(displayUser, "display user");
     return (
         <>
 

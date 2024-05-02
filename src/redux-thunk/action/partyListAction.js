@@ -6,7 +6,6 @@ export const submitConnectionPartyListData = (connectionData) => {
     return (dispatch) => {
         axios.post("http://localhost:8000/v1/partylist/create", connectionData)
             .then((res) => {
-                console.log(res.data.data, "action");
                 dispatch({
                     type: ADD_PARTYLIST,
                     payload: res.data.data

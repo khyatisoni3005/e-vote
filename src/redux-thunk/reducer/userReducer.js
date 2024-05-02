@@ -1,5 +1,5 @@
 import { userLoginDataSubmit } from "../action/userAction"
-import { ADD_USER, DELETE_USER, EMPTY_ID, GET_USER, UPDATE_USER, USER_LOGIN, VIEW_USER } from "../type"
+import { ADD_USER, DELETE_USER, EMPTY_ID, GET_USER, LOG_OUT_USER, UPDATE_USER, USER_LOGIN, VIEW_USER } from "../type"
 
 let initialState = {
     isUserLoggedin: false,
@@ -60,6 +60,13 @@ export const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userId: action.payload
+            }
+
+        case LOG_OUT_USER:
+            return {
+                ...state,
+                isUserLoggedin: false
+
             }
         default:
             return {

@@ -6,29 +6,56 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Navigate, useNavigate } from 'react-router-dom';
 import CommonButton from '../../CommonButton';
 import { getConnectionData } from "../../../redux-thunk/action/partyListAction"
 import { useDispatch, useSelector } from 'react-redux';
 import { json } from 'react-router-dom';
+import axios from 'axios';
+import { LOG_OUT_USER } from '../../../redux-thunk/type';
 
 
 function VoterTable() {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [party, setParty] = useState({})
+    const [party, setParty] = useState('')
     const { connectionData } = useSelector((state) => state.connection)
+    const { displayUser } = useSelector((state) => state.user)
+    const [user, setUser] = useState('')
     const { isUserLoggedin } = useSelector((state) => state.user)
 
+    useEffect(() => {
+        if (!isUserLoggedin) {
+            navigate("/UserLoginForm")
+        }
+    }, [isUserLoggedin])
     function handleVoteChange(e) {
         setParty(e.target.value)
+        setUser(displayUser._id)
     }
-
     function submitVoteData() {
+        let voteData = {
+            user,
+            party
+        }
+        axios.post(`http://localhost:8000/v1/vote/create`, voteData)
+            .then((res) => {
+                localStorage.removeItem("userLoginData")
+                dispatch({
+                    type: LOG_OUT_USER,
+                })
+            })
 
     }
 
+    function logout() {
+        console.log("logouuy");
+        localStorage.removeItem("userLoginData")
+        dispatch({
+            type: LOG_OUT_USER,
+        })
+    }
 
-
-    console.log(party, "party id");
     useEffect(() => {
         dispatch(getConnectionData())
     }, [])
@@ -37,7 +64,9 @@ function VoterTable() {
 
         <>
             <div style={{ width: "100%", display: "flex", justifyContent: "end", marginTop: "-50px", marginLeft: "210px", marginBottom: "30px" }}>
-                <CommonButton content={"vote"} onClick={submitVoteData} />
+                <CommonButton content={"vote"} onClick={submitVoteData} /> &nbsp;
+                <CommonButton content={"LogOut"} onClick={logout} />
+
             </div>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">

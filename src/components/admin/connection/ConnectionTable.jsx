@@ -36,7 +36,6 @@ function ConnectionTable() {
                             <TableBody>
                                 {
                                     connectionData?.filter((v) => v.party && v.election).map((val, ind) => {
-                                        console.log(val, "valll");
                                         return (
                                             <TableRow key={ind}>
                                                 <TableCell>{ind + 1}</TableCell>

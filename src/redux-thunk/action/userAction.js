@@ -5,7 +5,6 @@ export const userLoginDataSubmit = (userLoginData) => {
     return (dispatch) => {
         axios.post("http://localhost:8000/v1/login/user", userLoginData)
             .then((res) => {
-                console.log(res.data, " res.data login uer");
                 localStorage.setItem("userLoginData", JSON.stringify(res.data.data.user))
                 dispatch({
                     type: USER_LOGIN,
