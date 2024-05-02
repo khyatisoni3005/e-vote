@@ -14,7 +14,6 @@ export const electionReducer = (state = initialState, action) => {
                 electionDataList: newData
             }
         case GET_ELECTION:
-            console.log(action.payload, "reducer");
             return {
                 ...state,
                 electionDataList: action.payload

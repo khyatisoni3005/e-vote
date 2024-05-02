@@ -97,7 +97,7 @@ function ElectionModal() {
                                 <br />
                                 <label htmlFor="">Election date</label>
                                 <br />
-                                <input type="text" name='date' onChange={handleElection} value={electionData.date} />
+                                <input type="date" name='date' onChange={handleElection} value={electionData.date} />
 
                                 <br />
 

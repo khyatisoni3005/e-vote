@@ -113,3 +113,7 @@ ul li:focus {
 .css-1aejcdg-MuiPaper-root-MuiTableContainer-root {
   background-color: transparent !important;
 }
+
+body {
+  text-transform: capitalize;
+}

@@ -42,7 +42,6 @@ function UserModal() {
     }
 
     function submitUserData() {
-        console.log("submited");
         dispatch(userDataAction(userData))
         setOpen(false)
         setUserData({
@@ -92,7 +91,6 @@ function UserModal() {
     }, [open])
 
     useEffect(() => {
-        console.log("userId", userId)
         if (userId) {
             axios.get(`http://localhost:8000/v1/user/finduser/${userId}`)
                 .then((res) => {
@@ -156,7 +154,7 @@ function UserModal() {
                                 </div>
                                 <div className="col-6 user-lable">
                                     <label htmlFor="">DOB</label><br />
-                                    <input type="text" name='dob' onChange={handleUserData} value={userData.dob} />
+                                    <input type="date" name='dob' onChange={handleUserData} value={userData.dob} />
                                     <br />
                                     <label htmlFor="">Address</label><br />
                                     <input type="text" name='address' onChange={handleUserData} value={userData.address} />

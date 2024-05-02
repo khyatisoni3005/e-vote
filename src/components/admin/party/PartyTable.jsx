@@ -6,16 +6,23 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getPartyList } from "../../../redux-thunk/action/partyAction"
-
-
+import { getPartyList, deletepartyData, viewPartyData } from "../../../redux-thunk/action/partyAction"
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 function PartyTable() {
-
+    const { partyList } = useSelector((state) => state.party)
 
     const dispatch = useDispatch()
 
+    function viewParty(id) {
+        dispatch(viewPartyData(id))
+    }
+
+    function deleteParty(id) {
+        dispatch(deletepartyData(id))
+    }
     useEffect(() => {
         dispatch(getPartyList())
     }, [])
@@ -24,39 +31,61 @@ function PartyTable() {
 
 
         <div>
-            <TableContainer component={Paper} className='mt-5'>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell > <b>Number</b></TableCell>
-                            <TableCell ><b>Indian Political Party</b> </TableCell>
-                            <TableCell ><b>Symbole</b></TableCell>
-                            <TableCell ><b>Action</b></TableCell>
-                            <TableCell ></TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {/* {rows.map((row) => (
-                            <TableRow
-                                key={row.name}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                                <TableCell component="th" scope="row">
-                                    {row.name}
+            <div className="row">
+                <div className="col-1"></div>
+                <div className="col-10">
+                    <TableContainer component={Paper} className='mt-5'>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell > <b>Number</b></TableCell>
+                                    <TableCell ><b>Indian Political Party</b> </TableCell>
+                                    <TableCell ><b>Short Code</b></TableCell>
+                                    <TableCell ><b>Symbole</b></TableCell>
+
+                                    <TableCell align="left"><b>Action</b></TableCell>
+
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+
+                                {
+                                    partyList.map((val, ind) => {
+                                        return (
+                                            <TableRow key={ind} >
+                                                <TableCell>
+                                                    {ind + 1}
+                                                </TableCell>
+                                                <TableCell>{val.party_name}</TableCell>
+                                                <TableCell>{val.short_code}</TableCell>
+
+                                                <TableCell>
+
+                                                    {val.party_logo ? (
+                                                        <img src={`${val.party_logo}`} style={{ width: "50px", height: "50px" }} />
+                                                    ) : (
+                                                        <span>No logo available</span>
+                                                    )}
+                                                </TableCell>
+
+                                                <TableCell align="left">
+                                                    <DeleteIcon style={{ marginRight: "20px" }} onClick={() => deleteParty(val._id)} />
+                                                    <EditIcon onClick={() => viewParty(val._id)} />
+                                                </TableCell>
+                                            </TableRow>
+                                        )
+                                    })
+                                }
+                                <TableCell>
+
                                 </TableCell>
-                                <TableCell align="right">{row.calories}</TableCell>
-                                <TableCell align="right">{row.fat}</TableCell>
-                                <TableCell align="right">{row.carbs}</TableCell>
-                                <TableCell align="right">{row.protein}</TableCell>
-                            </TableRow>
-                        ))} */}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </div>
+                <div className="col-1"></div>
+            </div>
 
-                        <TableCell>
-
-                        </TableCell>
-                    </TableBody>
-                </Table>
-            </TableContainer>
 
         </div>
     )

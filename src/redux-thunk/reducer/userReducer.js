@@ -15,7 +15,7 @@ export const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isUserLoggedin: true,
-                displayUser: action.payload.data.user
+                displayUser: action.payload
             }
         case ADD_USER:
             let newUser = [...state.userDataList, action.payload]
@@ -43,7 +43,6 @@ export const userReducer = (state = initialState, action) => {
 
         case UPDATE_USER:
 
-            console.log(action.payload._id, "reducer ac");
             return {
                 ...state,
                 userDataList: state.userDataList.map((val) => {

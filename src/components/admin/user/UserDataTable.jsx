@@ -28,7 +28,6 @@ function UserDataTable() {
     }, [])
 
     function viewUser(id) {
-        console.log("viewUser", id);
         dispatch(viewUserData(id))
     }
 

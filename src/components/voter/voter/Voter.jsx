@@ -5,6 +5,7 @@ import Person3Icon from '@mui/icons-material/Person3';
 import { USER_LOGIN } from '../../../redux-thunk/type';
 import CommonButton from '../../CommonButton';
 import UserDetailModal from './UserDetailModal';
+import VoterTable from './VoterTable';
 
 
 export default function Voter() {
@@ -12,17 +13,17 @@ export default function Voter() {
     const dispatch = useDispatch()
     const { displayUser } = useSelector((state) => state.user)
 
+
+
+
     useEffect(() => {
         let userlogin = JSON.parse(localStorage.getItem("userLoginData"))
-        if (userlogin && userlogin.success) {
-
+        console.log(userlogin, "userlogin");
+        if (userlogin) {
             dispatch({
                 type: USER_LOGIN,
                 payload: userlogin
             })
-        }
-        else {
-
         }
     }, [])
 
@@ -65,7 +66,13 @@ export default function Voter() {
                 </h2>
 
             </div>
-
+            <div className="row ">
+                <div className="col-2"></div>
+                <div className="col-8 mt-3">
+                    <VoterTable />
+                </div>
+                <div className="col-2"></div>
+            </div>
         </>
     )
 }

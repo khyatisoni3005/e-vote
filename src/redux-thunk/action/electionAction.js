@@ -5,7 +5,6 @@ export const submitElectionData = (electionData) => {
     return (dispatch) => {
         axios.post("http://localhost:8000/v1/election/create", electionData)
             .then((res) => {
-                console.log(res.data, "action ele");
                 dispatch({
                     type: ADD_ELECTION,
                     payload: res.data.data

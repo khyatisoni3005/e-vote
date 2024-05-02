@@ -57,15 +57,7 @@ function ElectionTable() {
                         </TableRow>
                     </TableHead>
                     <TableBody
-                    // style={{
-                    //     minWidth: 650, background: " rgba(255, 255, 255, 0.90)",
-                    //     boxShadow: " 0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
-                    //     backdropfilter: "blur( 4px )",
-                    //     borderRadius: " 10px",
-                    //     webkitbackdropFilter: "blur( 4px )",
-                    //     background: "transparant",
-                    //     border: " 1px solid rgba( 255, 255, 255, 0.18 )"
-                    // }}
+
                     >
                         {
                             electionDataList?.map((val, ind) => {

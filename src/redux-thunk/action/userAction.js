@@ -5,12 +5,11 @@ export const userLoginDataSubmit = (userLoginData) => {
     return (dispatch) => {
         axios.post("http://localhost:8000/v1/login/user", userLoginData)
             .then((res) => {
-
+                console.log(res.data, " res.data login uer");
                 localStorage.setItem("userLoginData", JSON.stringify(res.data.data.user))
-                console.log(res.data.data.user, "res.data.data.user");
                 dispatch({
                     type: USER_LOGIN,
-                    payload: res.data
+                    payload: res.data.data.user
                 })
                 dispatch({
                     type: SUCCESS,
@@ -130,7 +129,6 @@ export const viewUserData = (id) => {
 
 
 export const updateUserDataAction = (userData) => {
-    console.log(userData, "action userdataa");
     return (dispatch) => {
         axios.put(`http://localhost:8000/v1/user/update/${userData._id}`, userData)
             .then((res) => {
@@ -138,7 +136,7 @@ export const updateUserDataAction = (userData) => {
                     type: UPDATE_USER,
                     payload: res.data.data
                 })
-                
+
                 dispatch({
                     type: SUCCESS,
                     payload: {
