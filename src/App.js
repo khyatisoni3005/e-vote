@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import Button from '@mui/material/Button';
-import { SnackbarProvider, useSnackbar } from 'notistack';
+import { useSnackbar } from 'notistack';
 import { useEffect } from "react";
 import UserLoginForm from "./components/voter/UserLoginForm";
 import DashBoard from "./components/admin/deshbord/DashBoard"
@@ -36,7 +36,7 @@ function App() {
 
   return (
     <>
-      < SnackbarProvider autoHideDuration={2000} maxSnack={20}>
+      
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -50,7 +50,7 @@ function App() {
           </Routes>
         </BrowserRouter>
 
-      </SnackbarProvider>
+      
     </>
 
   );

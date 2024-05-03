@@ -12,7 +12,7 @@ import { getConnectionData } from "../../../redux-thunk/action/partyListAction"
 import { useDispatch, useSelector } from 'react-redux';
 import { json } from 'react-router-dom';
 import axios from 'axios';
-import { LOG_OUT_USER } from '../../../redux-thunk/type';
+import { LOG_OUT_USER, SUCCESS } from '../../../redux-thunk/type';
 
 
 function VoterTable() {
@@ -54,6 +54,13 @@ function VoterTable() {
         dispatch({
             type: LOG_OUT_USER,
         })
+        dispatch({
+            type: SUCCESS,
+            payload: {
+                message: "USER LOGOUT SUCCESSFULLY"
+            }
+        })
+
     }
 
     useEffect(() => {
