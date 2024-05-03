@@ -20,6 +20,7 @@ export const commonReducer = (state = initialState, action) => {
                 }
             }
         case SUCCESS:
+            console.log("reducer SUCCESS")
             return {
                 alertObj: {
                     message: action.payload.message,

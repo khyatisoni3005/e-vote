@@ -3,6 +3,24 @@ import React, { useEffect, useState } from 'react'
 
 function Counting() {
 
+    const [electionName, setelectionName] = useState([])
+    const [partyName, setpartyName] = useState([])
+
+    useEffect(() => {
+        axios.get(`http://localhost:8000/v1/party/list`)
+            .then((res) => {
+                setpartyName(res.data.data)
+            })
+    }, [])
+
+    useEffect(() => {
+        axios.get(`http://localhost:8000/v1/election/list`)
+            .then((res) => {
+                setelectionName(res.data.data)
+
+            })
+    }, [])
+
     const [counts, setCounts] = useState([])
 
     useEffect(() => {
@@ -23,7 +41,7 @@ function Counting() {
     return (
 
         <div>
-            <h5 style={{ color: "red", marginTop: "30px" }}>🔴 Live Counting</h5>
+            <h5 style={{ color: "red", marginTop: "30px", marginLeft: "20px", marginBottom: "10px" }}>🔴 Live Counting</h5>
             <div>
                 <div className="row">
                     {counts.map(({ party, count }, index) => (
@@ -41,6 +59,51 @@ function Counting() {
                         </div>
 
                     ))}
+                </div>
+
+
+                <div className="row">
+
+                    <div className="col-6" style={{ width: "49%" }}>
+                        <p style={{ marginTop: "30px", paddingTop: "20px", marginLeft: "11px" }}>Current Election Party</p>
+                        <div className="box" style={{ backgroundColor: "rgb(248 248 248)", marginLeft: "10px" }}>
+
+                            <ul style={{ paddingTop: "10px", paddingRight: "20px" }}>
+                                {
+                                    electionName.map((val, ind) => {
+                                        return (
+
+                                            <>
+                                                <li style={{ fontSize: "16px", fontWeight: "normal", paddingTop: "2px", margin: "0px" }}> {ind + 1}.&nbsp;&nbsp;&nbsp;&nbsp;{val.election_name}</li>
+                                                <hr />
+                                            </>
+                                        )
+                                    })
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div className="col-6" style={{ width: "49%" }}>
+                        <p style={{ marginTop: "30px", paddingTop: "20px", marginLeft: "11px" }}>Current  Party list</p>
+                        <div className="box" style={{ backgroundColor: "rgb(248 248 248)", marginLeft: "10px" }}>
+
+                            <ul style={{ paddingTop: "10px", paddingRight: "20px" }}>
+                                {
+                                    partyName.map((val, ind) => {
+                                        return (
+
+                                            <>
+                                                <li style={{ fontSize: "16px", fontWeight: "normal", paddingTop: "2px", margin: "0px" }}> {ind + 1}.&nbsp;&nbsp;&nbsp;&nbsp;{val.party_name}</li>
+                                                <hr />
+                                            </>
+                                        )
+                                    })
+                                }
+                            </ul>
+                        </div>
+
+                    </div>
                 </div>
 
             </div>

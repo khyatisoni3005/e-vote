@@ -9,9 +9,10 @@ import { adminLogin } from "../redux-thunk/action/adminAction"
 import Button from '@mui/material/Button';
 import { SnackbarProvider, useSnackbar } from 'notistack';
 
+
 function Home() {
     const navigate = useNavigate();
-    const { alertObj } = useSelector((state) => state.common)
+    // const { alertObj } = useSelector((state) => state.common)
     const { isLoggedin } = useSelector((state) => state.admin)
     const { enqueueSnackbar } = useSnackbar();
     const dispatch = useDispatch()
@@ -32,17 +33,17 @@ function Home() {
         }
     }, [isLoggedin])
 
-    useEffect(() => {
-        if (alertObj && alertObj.message) {
-            enqueueSnackbar(alertObj.message, {
-                variant: alertObj.success ? "success" : "error",
-                anchorOrigin: {
-                    vertical: 'top',
-                    horizontal: 'center'
-                }
-            });
-        }
-    }, [alertObj])
+    // useEffect(() => {
+    //     if (alertObj && alertObj.message) {
+    //         enqueueSnackbar(alertObj.message, {
+    //             variant: alertObj.success ? "success" : "error",
+    //             anchorOrigin: {
+    //                 vertical: 'top',
+    //                 horizontal: 'center'
+    //             }
+    //         });
+    //     }
+    // }, [alertObj])
 
     return (
         <>

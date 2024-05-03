@@ -88,16 +88,19 @@ export const updateElectionData = (electionData) => {
     return (dispatch) => {
         axios.put(`http://localhost:8000/v1/election/update/${electionData._id}`, electionData)
             .then((res) => {
+                console.log("updateElectionData then")
                 dispatch({
                     type: UPDATE_ELECTION,
                     payload: res.data.data
                 })
+                console.log("updateElectionData then 2")
                 dispatch({
                     type: SUCCESS,
                     payload: {
                         message: "updated successfylly"
                     }
                 })
+                console.log("updateElectionData then 3")
             }).catch((error) => {
                 dispatch({
                     type: COMMON_ERROR,

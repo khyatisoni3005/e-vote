@@ -9,6 +9,12 @@ export const getPartyList = () => {
                     type: GET_PARTY,
                     payload: res.data.data
                 })
+                dispatch({
+                    type: SUCCESS,
+                    payload: {
+                        message: "party listt"
+                    }
+                })
             }).catch((error) => {
                 dispatch({
                     type: COMMON_ERROR,
@@ -60,7 +66,7 @@ export const submitPartyData = (partyData) => {
                 dispatch({
                     type: SUCCESS,
                     payload: {
-                        message: "deleted successfully...!"
+                        message: "create successfully...!"
                     }
                 })
             })
@@ -92,6 +98,14 @@ export const updatePartyData = (partydata) => {
                 dispatch({
                     type: UPDATE_PARTY,
                     payload: res.data.data
+                })
+            })
+            .catch((error) => {
+                dispatch({
+                    type: COMMON_ERROR,
+                    payload: {
+                        message: "failed...!"
+                    }
                 })
             })
     }

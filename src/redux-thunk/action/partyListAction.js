@@ -1,5 +1,5 @@
 import axios from "axios"
-import { ADD_PARTYLIST, GET_PARTYLIST } from "../type"
+import { ADD_PARTYLIST, GET_PARTYLIST, COMMON_ERROR } from "../type"
 
 export const submitConnectionPartyListData = (connectionData) => {
 
@@ -9,6 +9,14 @@ export const submitConnectionPartyListData = (connectionData) => {
                 dispatch({
                     type: ADD_PARTYLIST,
                     payload: res.data.data
+                })
+            })
+            .catch((error) => {
+                dispatch({
+                    type: COMMON_ERROR,
+                    payload: {
+                        message: "failed...!"
+                    }
                 })
             })
     }
@@ -24,6 +32,14 @@ export const getConnectionData = () => {
                 dispatch({
                     type: GET_PARTYLIST,
                     payload: res.data.data
+                })
+            })
+            .catch((error) => {
+                dispatch({
+                    type: COMMON_ERROR,
+                    payload: {
+                        message: "failed...!"
+                    }
                 })
             })
     }
